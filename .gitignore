@@ -1,0 +1,17 @@
+# Ignore Python packages and caches
+streamlit
+numpy<2.0
+scikit-learn>1.2,<1.6
+joblib
+pandas
+
+# Virtual environments
+venv/
+venv310/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Development/debugging files
+inspect_models.py

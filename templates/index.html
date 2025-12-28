@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PriceWise | AI Predictor</title>
+    <meta name="description" content="AI-powered price predictions for cars, houses, and laptops">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="user-avatar">
+                <img src="https://ui-avatars.com/api/?name=Price+Wise&background=0ea5e9&color=fff&size=80" alt="PriceWise">
+            </div>
+                <button id="hamburgerBtn" class="hamburger" aria-label="Toggle sidebar" aria-expanded="true">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            <h2 class="sidebar-title">PriceWise 💎</h2>
+            <p class="sidebar-subtitle">🔮 Select Model</p>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#home" class="nav-item active" data-section="home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Home</span>
+            </a>
+            <a href="#car" class="nav-item" data-section="car">
+                <span class="nav-icon">🚗</span>
+                <span class="nav-text">Car Price</span>
+            </a>
+            <a href="#house" class="nav-item" data-section="house">
+                <span class="nav-icon">🏘️</span>
+                <span class="nav-text">House Price</span>
+            </a>
+            <a href="#laptop" class="nav-item" data-section="laptop">
+                <span class="nav-icon">💻</span>
+                <span class="nav-text">Laptop Price</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="pro-tip">
+                <p class="pro-tip-title">💡 Pro Tip:</p>
+                <p class="pro-tip-text">Interactive sliders give you the most accurate real-time market estimates in 2024.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="content-wrapper">
+                <div class="hero-section">
+                    <h1 class="page-title">Welcome to PriceWise</h1>
+                    <p class="page-subtitle">Your intelligent AI-powered platform for accurate price predictions across multiple commodities. Select a predictor below to get started.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card car-card" data-goto="car">
+                        <div class="card-icon">🚗</div>
+                        <h3 class="card-title">Car Price Predictor</h3>
+                        <p class="card-description">Get accurate market valuations for used cars based on year, mileage, fuel type, and more. Perfect for buyers and sellers.</p>
+                    </div>
+
+                    <div class="feature-card house-card" data-goto="house">
+                        <div class="card-icon">🏘️</div>
+                        <h3 class="card-title">House Price Predictor</h3>
+                        <p class="card-description">Estimate property values in Bangalore based on location, size, and amenities. Essential for real estate decisions.</p>
+                    </div>
+
+                    <div class="feature-card laptop-card" data-goto="laptop">
+                        <div class="card-icon">💻</div>
+                        <h3 class="card-title">Laptop Price Predictor</h3>
+                        <p class="card-description">Calculate fair market prices for laptops based on specifications like RAM, weight, and screen size.</p>
+                    </div>
+                </div>
+                <div class="how-it-works">
+                    <h2 class="section-title">How It Works</h2>
+                    <div class="steps-grid">
+                        <div class="step-item">
+                            <div class="step-icon">📊</div>
+                            <h4 class="step-title">1. Select Predictor</h4>
+                            <p class="step-text">Choose from Car, House, or Laptop price prediction.</p>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-icon">✍️</div>
+                            <h4 class="step-title">2. Enter Details</h4>
+                            <p class="step-text">Fill in the specifications and features.</p>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-icon">🎯</div>
+                            <h4 class="step-title">3. Get Prediction</h4>
+                            <p class="step-text">Receive instant AI-powered price estimates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Car Section -->
+        <section id="car" class="section">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">Car Value Estimator 🚗</h1>
+                    <p class="page-subtitle">Precision AI Valuation for Used Vehicles</p>
+                </div>
+
+                <form id="carForm" class="prediction-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="car-year">Manufacturing Year</label>
+                            <input type="number" id="car-year" min="1990" max="2025" value="2018" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="car-fuel">Fuel Type</label>
+                            <select id="car-fuel" required>
+                                <option value="0">Petrol</option>
+                                <option value="1">Diesel</option>
+                                <option value="2">CNG</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="car-price">Showroom Price (Lakhs)</label>
+                            <input type="number" id="car-price" min="0.5" max="100" step="0.1" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="car-seller">Seller Type</label>
+                            <select id="car-seller" required>
+                                <option value="0">Dealer</option>
+                                <option value="1">Individual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="car-kms">Kilometers Driven</label>
+                            <input type="number" id="car-kms" min="0" max="500000" value="30000" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="car-transmission">Transmission</label>
+                            <select id="car-transmission" required>
+                                <option value="0">Manual</option>
+                                <option value="1">Automatic</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="car-owner">Owner History</label>
+                            <select id="car-owner" required>
+                                <option value="0">First Owner</option>
+                                <option value="1">Second Owner</option>
+                                <option value="3">Third Owner</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-predict">
+                        <span class="btn-text">PREDICT CAR PRICE</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
+                <div id="carResult" class="result-card hidden"></div>
+            </div>
+        </section>
+        <!-- House Section -->
+        <section id="house" class="section">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">Bangalore Property Estimator 🏘️</h1>
+                    <p class="page-subtitle">AI-Driven Real Estate Valuation</p>
+                </div>
+
+                <form id="houseForm" class="prediction-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="house-sqft">Total Area (Sqft)</label>
+                            <input type="number" id="house-sqft" min="500" max="10000" value="1200" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="house-bath">Bathrooms</label>
+                            <input type="number" id="house-bath" min="1" max="10" value="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="house-bhk">Bedrooms (BHK)</label>
+                            <input type="number" id="house-bhk" min="1" max="10" value="2" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label for="house-location">Property Location</label>
+                            <select id="house-location" required>
+                                <option value="">Loading locations...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-predict">
+                        <span class="btn-text">ESTIMATE PROPERTY PRICE</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
+                <div id="houseResult" class="result-card hidden"></div>
+            </div>
+        </section>
+
+        <!-- Laptop Section -->
+        <section id="laptop" class="section">
+            <div class="content-wrapper">
+                <div class="page-header">
+                    <h1 class="page-title">Laptop Price Wizard 💻</h1>
+                    <p class="page-subtitle">Calculate Fair Market Value for Tech</p>
+                </div>
+
+                <form id="laptopForm" class="prediction-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="laptop-ram">RAM (GB)</label>
+                            <input type="number" id="laptop-ram" min="2" max="64" value="8" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="laptop-weight">Weight (kg)</label>
+                            <input type="number" id="laptop-weight" min="0.5" max="5" step="0.1" value="1.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="laptop-inches">Screen Size (Inches)</label>
+                            <input type="number" id="laptop-inches" min="10" max="20" step="0.1" value="15.6" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-predict">
+                        <span class="btn-text">PREDICT LAPTOP PRICE</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+
+                <div id="laptopResult" class="result-card hidden"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
+</body>
+</html>
