@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +9,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="user-avatar">
-                <img src="https://ui-avatars.com/api/?name=Price+Wise&background=0ea5e9&color=fff&size=80" alt="PriceWise">
+                <img src="https://ui-avatars.com/api/?name=Price+Wise&background=0ea5e9&color=fff&size=80"
+                    alt="PriceWise">
             </div>
-                <button id="hamburgerBtn" class="hamburger" aria-label="Toggle sidebar" aria-expanded="true">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </button>
+            <button id="hamburgerBtn" class="hamburger" aria-label="Toggle sidebar" aria-expanded="true">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
             <h2 class="sidebar-title">PriceWise 💎</h2>
             <p class="sidebar-subtitle">🔮 Select Model</p>
         </div>
@@ -48,38 +52,67 @@
         <div class="sidebar-footer">
             <div class="pro-tip">
                 <p class="pro-tip-title">💡 Pro Tip:</p>
-                <p class="pro-tip-text">Interactive sliders give you the most accurate real-time market estimates in 2024.</p>
+                <p class="pro-tip-text">Interactive sliders give you the most accurate real-time market estimates in
+                    2024.</p>
             </div>
         </div>
     </aside>
 
     <!-- Main Content -->
     <main class="main-content">
+        <button id="desktopToggle" class="desktop-toggle" aria-label="Toggle Sidebar">
+            ☰
+        </button>
         <!-- Home Section -->
         <section id="home" class="section active">
             <div class="content-wrapper">
                 <div class="hero-section">
                     <h1 class="page-title">Welcome to PriceWise</h1>
-                    <p class="page-subtitle">Your intelligent AI-powered platform for accurate price predictions across multiple commodities. Select a predictor below to get started.</p>
+                    <p class="page-subtitle">Your intelligent AI-powered platform for accurate price predictions across
+                        multiple commodities. Select a predictor below to get started.</p>
                 </div>
 
-                <div class="features-grid">
-                    <div class="feature-card car-card" data-goto="car">
-                        <div class="card-icon">🚗</div>
-                        <h3 class="card-title">Car Price Predictor</h3>
-                        <p class="card-description">Get accurate market valuations for used cars based on year, mileage, fuel type, and more. Perfect for buyers and sellers.</p>
+                <div class="carousel-container">
+                    <button class="carousel-btn prev" aria-label="Previous Slide">❮</button>
+
+                    <div class="carousel-track">
+                        <!-- Car Slide -->
+                        <div class="carousel-slide">
+                            <div class="feature-card car-card" data-goto="car">
+                                <div class="card-icon">🚗</div>
+                                <h3 class="card-title">Car Price Predictor</h3>
+                                <p class="card-description">Get accurate market valuations for used cars based on year,
+                                    mileage, fuel type, and more. Perfect for buyers and sellers.</p>
+                            </div>
+                        </div>
+
+                        <!-- House Slide -->
+                        <div class="carousel-slide">
+                            <div class="feature-card house-card" data-goto="house">
+                                <div class="card-icon">🏘️</div>
+                                <h3 class="card-title">House Price Predictor</h3>
+                                <p class="card-description">Estimate property values in Bangalore based on location,
+                                    size, and amenities. Essential for real estate decisions.</p>
+                            </div>
+                        </div>
+
+                        <!-- Laptop Slide -->
+                        <div class="carousel-slide">
+                            <div class="feature-card laptop-card" data-goto="laptop">
+                                <div class="card-icon">💻</div>
+                                <h3 class="card-title">Laptop Price Predictor</h3>
+                                <p class="card-description">Calculate fair market prices for laptops based on
+                                    specifications like RAM, weight, and screen size.</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="feature-card house-card" data-goto="house">
-                        <div class="card-icon">🏘️</div>
-                        <h3 class="card-title">House Price Predictor</h3>
-                        <p class="card-description">Estimate property values in Bangalore based on location, size, and amenities. Essential for real estate decisions.</p>
-                    </div>
+                    <button class="carousel-btn next" aria-label="Next Slide">❯</button>
 
-                    <div class="feature-card laptop-card" data-goto="laptop">
-                        <div class="card-icon">💻</div>
-                        <h3 class="card-title">Laptop Price Predictor</h3>
-                        <p class="card-description">Calculate fair market prices for laptops based on specifications like RAM, weight, and screen size.</p>
+                    <div class="carousel-dots">
+                        <div class="dot active" data-index="0"></div>
+                        <div class="dot" data-index="1"></div>
+                        <div class="dot" data-index="2"></div>
                     </div>
                 </div>
                 <div class="how-it-works">
@@ -256,6 +289,7 @@
     </main>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-        <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
+    <div id="sidebarOverlay" class="sidebar-overlay" tabindex="-1" aria-hidden="true"></div>
 </body>
+
 </html>

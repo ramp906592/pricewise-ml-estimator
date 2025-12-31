@@ -8,35 +8,38 @@ app = Flask(__name__)
 CORS(app)
 
 # ===============================
-# LOAD MODELS
+# LOAD MODELS (LAZY LOADING)
 # ===============================
-def load_assets():
-    assets = {}
-    
-    # HOUSE MODEL
-    if os.path.exists("models/bangalore_house_model.pkl"):
-        assets["house"] = {
-            "model": joblib.load("models/bangalore_house_model.pkl"),
-            "columns": joblib.load("models/house_columns.pkl")
-        }
-    
-    # LAPTOP MODEL
-    if os.path.exists("models/laptop_price_model.pkl"):
-        assets["laptop"] = {
-            "model": joblib.load("models/laptop_price_model.pkl"),
-            "columns": joblib.load("models/laptop_columns.pkl")
-        }
-    
-    # CAR MODEL
-    if os.path.exists("models/car_model.pkl"):
-        assets["car"] = joblib.load("models/car_model.pkl")
-    
-    return assets
+assets = {}
 
-# Load models at startup
-print("Loading ML models...")
-assets = load_assets()
-print(f"Loaded models: {list(assets.keys())}")
+def get_asset(asset_type):
+    global assets
+    
+    # Return if already loaded
+    if asset_type in assets:
+        return assets[asset_type]
+    
+    print(f"Loading {asset_type} model...")
+    
+    if asset_type == "house":
+        if os.path.exists("models/bangalore_house_model.pkl"):
+            assets["house"] = {
+                "model": joblib.load("models/bangalore_house_model.pkl"),
+                "columns": joblib.load("models/house_columns.pkl")
+            }
+    
+    elif asset_type == "laptop":
+        if os.path.exists("models/laptop_price_model.pkl"):
+            assets["laptop"] = {
+                "model": joblib.load("models/laptop_price_model.pkl"),
+                "columns": joblib.load("models/laptop_columns.pkl")
+            }
+            
+    elif asset_type == "car":
+        if os.path.exists("models/car_model.pkl"):
+            assets["car"] = joblib.load("models/car_model.pkl")
+            
+    return assets.get(asset_type)
 # ===============================
 # ROUTES
 # ===============================
@@ -69,7 +72,10 @@ def predict_car():
         X = np.array([[year, present_price, kms, fuel, seller, transmission, owner]])
         
         # Predict
-        price = assets["car"].predict(X)[0]
+        model = get_asset("car")
+        if not model:
+            raise ValueError("Car model not found")
+        price = model.predict(X)[0]
         
         return jsonify({
             'success': True,
@@ -87,7 +93,9 @@ def predict_house():
     """House price prediction endpoint"""
     try:
         data = request.json
-        house = assets["house"]
+        house = get_asset("house")
+        if not house:
+            raise ValueError("House model not found")
         cols = house["columns"]
         
         # Extract features
@@ -127,7 +135,9 @@ def predict_laptop():
     """Laptop price prediction endpoint"""
     try:
         data = request.json
-        laptop = assets["laptop"]
+        laptop = get_asset("laptop")
+        if not laptop:
+            raise ValueError("Laptop model not found")
         cols = laptop["columns"]
         
         # Extract features
@@ -164,7 +174,9 @@ def predict_laptop():
 def get_locations():
     """Get available house locations"""
     try:
-        house = assets["house"]
+        house = get_asset("house")
+        if not house:
+            return jsonify({'success': False, 'error': 'House model not loading'}), 500
         cols = house["columns"]
         locations = sorted([c.replace("location_", "") for c in cols if c.startswith("location_")])
         

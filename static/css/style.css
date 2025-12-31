@@ -129,6 +129,7 @@ body {
     padding: 0.25rem;
     margin-bottom: 0.5rem;
 }
+
 .hamburger .bar {
     display: block;
     width: 22px;
@@ -143,7 +144,7 @@ body {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0, 0, 0, 0.45);
     z-index: 900;
 }
 
@@ -151,9 +152,11 @@ body {
 body.sidebar-hidden .sidebar {
     transform: translateX(-100%);
 }
+
 body.sidebar-hidden .sidebar-overlay {
     display: block;
 }
+
 body.sidebar-hidden .hamburger {
     /* keep hamburger visible inside header when closed */
 }
@@ -178,12 +181,50 @@ body.sidebar-hidden .hamburger {
 }
 
 /* =============================== MAIN CONTENT =============================== */
+/* =============================== MAIN CONTENT =============================== */
 .main-content {
     margin-left: 280px;
     flex: 1;
     min-height: 100vh;
     background: var(--primary-bg);
+    transition: margin-left 0.3s ease;
+    position: relative;
 }
+
+/* Desktop Toggle Button */
+.desktop-toggle {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 100;
+    background: rgba(10, 37, 51, 0.6);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.desktop-toggle:hover {
+    background: var(--accent-cyan);
+    color: var(--primary-bg);
+}
+
+/* Collapsed Sidebar State */
+body.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+}
+
+body.sidebar-collapsed .main-content {
+    margin-left: 0;
+}
+
 
 .content-wrapper {
     max-width: 1200px;
@@ -205,6 +246,7 @@ body.sidebar-hidden .hamburger {
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -212,7 +254,8 @@ body.sidebar-hidden .hamburger {
 }
 
 /* =============================== PAGE HEADER =============================== */
-.page-header, .hero-section {
+.page-header,
+.hero-section {
     text-align: center;
     margin-bottom: 3rem;
 }
@@ -232,46 +275,122 @@ body.sidebar-hidden .hamburger {
     line-height: 1.6;
 }
 
-/* =============================== FEATURE CARDS =============================== */
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+/* =============================== FEATURE CARDS (CAROUSEL) =============================== */
+.carousel-container {
+    position: relative;
+    max-width: 800px;
+    margin: 3rem auto;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
     gap: 2rem;
-    margin: 3rem 0;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    /* Ensure only one slide is visible at a time */
+    display: flex;
+    justify-content: center;
 }
 
 .feature-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 3rem;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
+    width: 100%;
+    max-width: 500px;
+    /* Limit card width within slide */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
     background: var(--card-hover);
+    border-color: var(--accent-cyan);
 }
 
 .card-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 
 .card-title {
-    font-size: 1.3rem;
+    font-size: 1.8rem;
     font-weight: 600;
     color: var(--accent-cyan);
     margin-bottom: 1rem;
 }
 
 .card-description {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     line-height: 1.6;
+}
+
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 37, 51, 0.8);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background: var(--accent-cyan);
+    color: var(--primary-bg);
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.4);
+}
+
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
+
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--accent-cyan);
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
+    transform: scale(1.2);
 }
 
 /* =============================== HOW IT WORKS =============================== */
@@ -347,7 +466,8 @@ body.sidebar-hidden .hamburger {
     margin-bottom: 0.5rem;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
     background: var(--input-bg);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -358,7 +478,8 @@ body.sidebar-hidden .hamburger {
     transition: all 0.3s ease;
 }
 
-.form-group input:focus, .form-group select:focus {
+.form-group input:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--accent-cyan);
     box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
@@ -415,7 +536,9 @@ body.sidebar-hidden .hamburger {
 }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* =============================== RESULT CARD =============================== */
@@ -467,8 +590,15 @@ body.sidebar-hidden .hamburger {
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* =============================== RESPONSIVE DESIGN =============================== */
@@ -478,15 +608,19 @@ body.sidebar-hidden .hamburger {
     .sidebar {
         width: 220px;
     }
+
     .main-content {
         margin-left: 220px;
     }
+
     .content-wrapper {
         padding: 1.5rem;
     }
+
     .page-title {
         font-size: 2.2rem;
     }
+
     .features-grid {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 1.5rem;
@@ -495,9 +629,29 @@ body.sidebar-hidden .hamburger {
 
 /* Mobile (Landscape) & Tablet (Portrait) - 768px and below */
 @media (max-width: 768px) {
+
+    /* Hide Desktop Toggle on Mobile */
+    .desktop-toggle {
+        display: none;
+    }
+
+    /* Adjust Carousel for Mobile */
+    .carousel-container {
+        padding: 0;
+        margin: 2rem 0;
+    }
+
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        background: rgba(10, 37, 51, 0.9);
+    }
+
     body {
         flex-direction: column;
     }
+
     .sidebar {
         width: 100%;
         height: auto;
@@ -507,6 +661,7 @@ body.sidebar-hidden .hamburger {
         border-right: none;
         border-bottom: 1px solid var(--border-color);
     }
+
     .sidebar-header {
         padding: 1rem;
         display: flex;
@@ -514,18 +669,22 @@ body.sidebar-hidden .hamburger {
         justify-content: space-between;
         border-bottom: none;
     }
+
     .user-avatar {
         width: 50px;
         height: 50px;
         margin: 0;
     }
+
     .sidebar-title {
         font-size: 1.2rem;
         margin: 0;
     }
+
     .sidebar-subtitle {
         display: none;
     }
+
     .sidebar-nav {
         display: flex;
         overflow-x: auto;
@@ -534,6 +693,7 @@ body.sidebar-hidden .hamburger {
         -webkit-overflow-scrolling: touch;
         scrollbar-width: thin;
     }
+
     .nav-item {
         flex-direction: column;
         text-align: center;
@@ -543,83 +703,108 @@ body.sidebar-hidden .hamburger {
         border-bottom: 3px solid transparent;
         white-space: nowrap;
     }
+
     .nav-item.active {
         border-left: none;
         border-bottom-color: var(--accent-cyan);
     }
+
     .nav-icon {
         font-size: 1.5rem;
         margin-right: 0;
         margin-bottom: 0.3rem;
     }
+
     .nav-text {
         font-size: 0.75rem;
     }
+
     .sidebar-footer {
         display: none;
     }
+
     .main-content {
         margin-left: 0;
         width: 100%;
     }
+
     .content-wrapper {
         padding: 1rem;
     }
+
     .page-title {
         font-size: 1.8rem;
         line-height: 1.2;
     }
+
     .page-subtitle {
         font-size: 0.95rem;
     }
+
     .features-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
         margin: 2rem 0;
     }
+
     .feature-card {
         padding: 1.5rem;
     }
+
     .card-icon {
         font-size: 2.5rem;
     }
+
     .card-title {
         font-size: 1.2rem;
     }
+
     .card-description {
         font-size: 0.9rem;
     }
+
     .how-it-works {
         margin-top: 3rem;
     }
+
     .section-title {
         font-size: 1.6rem;
     }
+
     .steps-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
+
     .prediction-form {
         padding: 1.5rem;
     }
+
     .form-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    .form-group input, .form-group select {
+
+    .form-group input,
+    .form-group select {
         padding: 0.9rem 1rem;
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
+        /* Prevents zoom on iOS */
     }
+
     .btn-predict {
         padding: 1rem;
         font-size: 0.95rem;
     }
+
     .result-card {
         padding: 1.5rem;
     }
+
     .result-card .price {
         font-size: 2.5rem;
     }
+
     .result-card h3 {
         font-size: 1rem;
     }
@@ -632,88 +817,116 @@ body.sidebar-hidden .hamburger {
         flex-direction: column;
         gap: 0.5rem;
     }
+
     .user-avatar {
         width: 40px;
         height: 40px;
     }
+
     .sidebar-title {
         font-size: 1rem;
     }
+
     .nav-item {
         padding: 0.7rem 0.8rem;
         min-width: 80px;
     }
+
     .nav-icon {
         font-size: 1.3rem;
     }
+
     .nav-text {
         font-size: 0.7rem;
     }
+
     .content-wrapper {
         padding: 0.8rem;
     }
+
     .page-title {
         font-size: 1.5rem;
     }
+
     .page-subtitle {
         font-size: 0.85rem;
     }
+
     .features-grid {
         gap: 1rem;
         margin: 1.5rem 0;
     }
+
     .feature-card {
         padding: 1.2rem;
     }
+
     .card-icon {
         font-size: 2rem;
     }
+
     .card-title {
         font-size: 1.1rem;
     }
+
     .card-description {
         font-size: 0.85rem;
     }
+
     .section-title {
         font-size: 1.4rem;
     }
+
     .step-item {
         padding: 1rem;
     }
+
     .step-icon {
         font-size: 2rem;
     }
+
     .step-title {
         font-size: 1rem;
     }
+
     .step-text {
         font-size: 0.85rem;
     }
+
     .prediction-form {
         padding: 1rem;
         border-radius: 8px;
     }
+
     .form-group label {
         font-size: 0.85rem;
     }
-    .form-group input, .form-group select {
+
+    .form-group input,
+    .form-group select {
         padding: 0.8rem;
-        font-size: 16px; /* Prevents zoom on iOS */
+        font-size: 16px;
+        /* Prevents zoom on iOS */
         border-radius: 6px;
     }
+
     .btn-predict {
         padding: 0.9rem;
         font-size: 0.9rem;
     }
+
     .result-card {
         padding: 1.2rem;
     }
+
     .result-card h3 {
         font-size: 0.9rem;
     }
+
     .result-card .price {
         font-size: 2rem;
     }
+
     .result-card .subtitle {
         font-size: 0.8rem;
     }
@@ -724,25 +937,32 @@ body.sidebar-hidden .hamburger {
     .sidebar-title {
         font-size: 0.9rem;
     }
+
     .nav-item {
         min-width: 70px;
         padding: 0.6rem 0.5rem;
     }
+
     .nav-icon {
         font-size: 1.2rem;
     }
+
     .nav-text {
         font-size: 0.65rem;
     }
+
     .page-title {
         font-size: 1.3rem;
     }
+
     .page-subtitle {
         font-size: 0.8rem;
     }
+
     .card-title {
         font-size: 1rem;
     }
+
     .result-card .price {
         font-size: 1.8rem;
     }
@@ -753,19 +973,24 @@ body.sidebar-hidden .hamburger {
     .sidebar {
         position: relative;
     }
+
     .sidebar-header {
         padding: 0.5rem;
     }
+
     .user-avatar {
         width: 35px;
         height: 35px;
     }
+
     .nav-item {
         padding: 0.5rem 0.8rem;
     }
+
     .content-wrapper {
         padding: 1rem;
     }
+
     .page-title {
         font-size: 1.5rem;
     }
@@ -773,14 +998,21 @@ body.sidebar-hidden .hamburger {
 
 /* Touch Device Optimizations */
 @media (hover: none) and (pointer: coarse) {
-    .nav-item, .feature-card, .btn-predict {
+
+    .nav-item,
+    .feature-card,
+    .btn-predict {
         -webkit-tap-highlight-color: rgba(0, 188, 212, 0.2);
     }
+
     .nav-item {
-        min-height: 44px; /* iOS minimum touch target */
+        min-height: 44px;
+        /* iOS minimum touch target */
     }
+
     .btn-predict {
-        min-height: 48px; /* Android minimum touch target */
+        min-height: 48px;
+        /* Android minimum touch target */
     }
 }
 
@@ -810,4 +1042,3 @@ body.sidebar-hidden .hamburger {
         height: 4px;
     }
 }
-

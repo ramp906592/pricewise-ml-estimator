@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadLocations();
     setupNavigation();
     setupForms();
-    setupFeatureCards();
+    setupCarousel();
     setupSidebarToggle();
 });
 
@@ -49,14 +49,54 @@ function switchSection(sectionId) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function setupFeatureCards() {
+function setupCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextBtn = document.querySelector('.carousel-btn.next');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const dotsNav = document.querySelector('.carousel-dots');
+    const dots = Array.from(dotsNav.children);
     const featureCards = document.querySelectorAll('.feature-card');
+
+    let currentSlideIndex = 0;
+
+    const updateCarousel = (index) => {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach(d => d.classList.remove('active'));
+        dots[index].classList.add('active');
+        currentSlideIndex = index;
+    };
+
+    nextBtn.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        updateCarousel(currentSlideIndex);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+        updateCarousel(currentSlideIndex);
+    });
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            updateCarousel(index);
+        });
+    });
+
+    // Handle card clicks to navigate to section
     featureCards.forEach(card => {
-        card.addEventListener('click', () => {
+        card.addEventListener('click', (e) => {
+            // Prevent navigation if dragging/swiping (optional future enhancement)
             const targetSection = card.dataset.goto;
             switchSection(targetSection);
         });
     });
+
+    // Auto slide every 5 seconds
+    setInterval(() => {
+        currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+        updateCarousel(currentSlideIndex);
+    }, 5000);
 }
 // ===============================
 // FORM HANDLING
@@ -301,4 +341,12 @@ function setupSidebarToggle() {
             btn.setAttribute('aria-expanded', 'true');
         }
     });
+
+    // Desktop Toggle
+    const desktopBtn = document.getElementById('desktopToggle');
+    if (desktopBtn) {
+        desktopBtn.addEventListener('click', () => {
+            document.body.classList.toggle('sidebar-collapsed');
+        });
+    }
 }
